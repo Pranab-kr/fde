@@ -1,0 +1,13 @@
+node_modules/
+node_modules
+.env
+.env.*
+.env.local
+.env.*.local
+!.env.example
+!.env.*.example
+!*.env.example
+.agents/
+.claude/
+
+

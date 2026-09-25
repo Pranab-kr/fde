@@ -1,0 +1,22 @@
+{
+	"name": "jsdemo",
+	"version": "1.0.0",
+	"description": "",
+	"main": "src/index.js",
+	"scripts": {
+		"dev": "node --watch src/index.js",
+		"test": "node tests/test-backend.js && node tests/test-frontend-structure.js && node tests/test-client-logic.js && node tests/test-e2e.js"
+	},
+	"keywords": [],
+	"type": "module",
+	"devDependencies": {
+		"@types/express": "^5.0.6",
+		"@types/node": "^26.6.2",
+		"dotenv": "^18.0.1"
+	},
+	"dependencies": {
+		"cors": "^2.8.6",
+		"express": "^5.2.1",
+		"openai": "^7.19.0"
+	}
+}

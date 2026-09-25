@@ -1,0 +1,16 @@
+node_modules/
+node_modules
+.env
+.env.*
+.env.local
+.env.*.local
+!.env.example
+!.env.*.example
+!*.env.example
+generated-sites/
+.agents/
+.claude/
+docs/
+generated-sites/
+skills-lock.json
+tests/

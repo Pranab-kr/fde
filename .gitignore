@@ -1,0 +1,35 @@
+# Environment & secret files (matches in root and any subdirectory)
+.env
+.env.*
+.env.local
+.env.*.local
+env
+env.*
+env.local
+*.env
+
+# Allow example environment files
+!.env.example
+!.env.*.example
+!*.env.example
+!env.example
+!env.*.example
+
+# Dependencies
+node_modules/
+node_modules
+node_modeles/
+
+# Documentation
+docs/
+
+# AI and agent tooling
+.agents
+.agents/
+.claude
+.claude/
+skills-lock.json
+.superpowers/
+
+tests/
+test/

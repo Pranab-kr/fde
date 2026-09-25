@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Hallmark Studio · Modern-Minimal AI Assistant & Website Generator</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link
+		href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap"
+		rel="stylesheet"
+	/>
+	<link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+	<div class="app-layout" id="app-root">
+		<!-- Top Application Header -->
+		<header class="app-header">
+			<div class="header-brand">
+				<div class="brand-mark" aria-hidden="true">
+					<span class="brand-square"></span>
+				</div>
+				<div class="brand-text">
+					<h1 class="brand-title">Hallmark Studio</h1>
+					<span class="brand-badge">Cobalt · Modern-Minimal</span>
+				</div>
+			</div>
+
+			<!-- Dual Mode Switcher -->
+			<nav class="mode-nav" aria-label="Application Mode Selection">
+				<div class="mode-toggle" role="radiogroup" aria-label="Mode selection">
+					<button
+						type="button"
+						id="mode-assistant"
+						class="mode-btn is-active"
+						data-mode="assistant"
+						role="radio"
+						aria-checked="true"
+					>
+						<span class="mode-btn-indicator"></span>
+						<span class="mode-btn-label">AI Assistant</span>
+					</button>
+					<button
+						type="button"
+						id="mode-studio"
+						class="mode-btn"
+						data-mode="studio"
+						role="radio"
+						aria-checked="false"
+					>
+						<span class="mode-btn-indicator"></span>
+						<span class="mode-btn-label">Website Studio</span>
+					</button>
+				</div>
+			</nav>
+
+			<!-- Header Status -->
+			<div class="header-status">
+				<span class="status-indicator" id="header-status-indicator"></span>
+				<span class="status-label" id="header-status-label">Ready</span>
+			</div>
+		</header>
+
+		<!-- Main Dual-Mode Workspace Stage -->
+		<main class="app-stage mode-assistant" id="app-stage">
+			<!-- Primary Chat / Studio Panel -->
+			<section id="chat-panel" class="chat-panel" aria-label="Chat and Generation Panel">
+				<div class="panel-header">
+					<div class="panel-title-wrap">
+						<span class="panel-eyebrow" id="panel-eyebrow">CONVERSATION</span>
+						<h2 class="panel-title" id="panel-title">AI Assistant</h2>
+					</div>
+					<div class="panel-tools">
+						<span class="model-badge" id="model-badge">gpt-4o-mini</span>
+						<button
+							type="button"
+							id="clear-context-btn"
+							class="btn btn--secondary btn--sm"
+							title="Clear context history to free LLM context window"
+							aria-label="Clear context history"
+						>
+							<span class="btn-spinner" aria-hidden="true"></span>
+							<span class="btn-text">Clear Context</span>
+						</button>
+					</div>
+				</div>
+
+				<!-- Messages Stream -->
+				<div id="messages-container" class="messages-container" role="log" aria-live="polite">
+					<div class="message-item message-system">
+						<div class="message-meta">
+							<span class="sender-tag">System</span>
+							<span class="message-timestamp">Just now</span>
+						</div>
+						<div class="message-body">
+							<p>Welcome to <strong>Hallmark Studio</strong>. Select <strong>AI Assistant</strong> for calculations, weather, and currency tools, or switch to <strong>Website Studio</strong> to build static websites with locked OKLCH tokens and live previews.</p>
+						</div>
+					</div>
+				</div>
+
+				<!-- Prompt Bar & Input Controls -->
+				<div class="prompt-dock">
+					<form id="prompt-form" class="prompt-form">
+						<div class="prompt-input-container">
+							<textarea
+								id="prompt-input"
+								class="prompt-input"
+								rows="1"
+								placeholder="Ask the assistant or describe a website to generate..."
+								aria-label="Message prompt"
+								required
+							></textarea>
+							<button
+								type="submit"
+								id="send-btn"
+								class="btn btn--primary send-btn"
+								aria-label="Send message"
+							>
+								<span class="btn-text">Send</span>
+								<span class="btn-spinner" aria-hidden="true"></span>
+							</button>
+						</div>
+						<div class="prompt-meta-bar">
+							<span class="prompt-shortcut-hint">Enter to send · Shift+Enter for new line</span>
+							<span class="prompt-status-msg" id="prompt-status-msg"></span>
+						</div>
+					</form>
+				</div>
+			</section>
+
+			<!-- Website Studio Preview Panel -->
+			<aside id="preview-panel" class="preview-panel" aria-label="Website Studio Live Preview">
+				<div class="preview-header">
+					<div class="preview-title-block">
+						<span class="preview-eyebrow">STUDIO PREVIEW</span>
+						<h2 class="preview-site-heading" id="preview-sitename">No site loaded</h2>
+					</div>
+					<div class="preview-actions">
+						<a
+							id="preview-external-link"
+							class="btn btn--secondary preview-external-link is-disabled"
+							href="#"
+							target="_blank"
+							rel="noopener noreferrer"
+							aria-disabled="true"
+							tabindex="-1"
+						>
+							<span class="btn-text">Open in New Tab</span>
+							<svg
+								class="btn-icon"
+								width="13"
+								height="13"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								aria-hidden="true"
+							>
+								<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+								<polyline points="15 3 21 3 21 9"></polyline>
+								<line x1="10" y1="14" x2="21" y2="3"></line>
+							</svg>
+						</a>
+					</div>
+				</div>
+
+				<div class="preview-viewport-container">
+					<iframe
+						id="preview-frame"
+						class="preview-frame"
+						title="Generated Website Preview"
+						sandbox="allow-scripts allow-same-origin"
+					></iframe>
+					<div id="preview-empty-state" class="preview-empty-state">
+						<div class="empty-state-card">
+							<div class="empty-state-badge">Studio Canvas</div>
+							<h3 class="empty-state-title">Awaiting Generation</h3>
+							<p class="empty-state-desc">
+								Switch to <strong>Website Studio</strong> mode and prompt the generator. Generated sites with locked OKLCH tokens and roman typography will render here automatically.
+							</p>
+							<div class="hallmark-rule-badges">
+								<span class="rule-badge">Cobalt Palette</span>
+								<span class="rule-badge">Roman Type</span>
+								<span class="rule-badge">8-State UI</span>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="preview-footer-bar">
+					<div class="preview-status-indicator-wrap">
+						<span class="status-indicator" id="preview-status-indicator"></span>
+						<span class="preview-status-text" id="preview-status-text">Status: Idle</span>
+					</div>
+					<span class="preview-url-display" id="preview-url-display">http://localhost:3000/sites/</span>
+				</div>
+			</aside>
+		</main>
+	</div>
+
+	<script src="/script.js" type="module"></script>
+</body>
+</html>
