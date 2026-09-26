@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+		<title>atlas · fifty anime, one synopsis each</title>
+		<meta
+			name="description"
+			content="A cover-first catalogue of fifty anime. Describe a mood instead of a title and the vector engine ranks the synopses for you."
+		/>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Space+Mono:wght@400;700&display=swap"
+			rel="stylesheet"
+		/>
+		<link
+			href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600&display=swap"
+			rel="stylesheet"
+		/>
+		<link rel="stylesheet" href="/css/atlas.css" />
+	</head>
+	<body>
+		<a class="visually-hidden" href="#catalogue">Skip to the catalogue</a>
+
+		<!-- ── N9 · edge-aligned minimal · no link row, the space is the design ── -->
+		<header class="nav-edge">
+			<a class="wordmark" href="/index.html">atlas<span class="period" aria-hidden="true"></span></a>
+			<a class="nav-edge__cta" href="#mood-band">Describe a mood</a>
+		</header>
+
+		<main>
+			<!-- ── inventory head · wordmark-scale, no display hero ── -->
+			<section class="shell masthead" aria-labelledby="masthead-title">
+				<div class="masthead__row">
+					<div>
+						<h1 id="masthead-title">Fifty titles, one synopsis each.</h1>
+						<p class="masthead__note">
+							Every cover below is the real one. Nothing is generated, and nothing here is
+							ranked by popularity — the list is the dataset, in the order it ships.
+						</p>
+					</div>
+					<p class="mono" id="inventory-line">Loading the catalogue…</p>
+				</div>
+				<hr class="rule-heavy rule-heavy--spaced" />
+			</section>
+
+			<!-- ── the one dark band · the actual action ── -->
+			<section class="band" id="mood-band" aria-labelledby="mood-title">
+				<div class="shell band__inner">
+					<div>
+						<h2 id="mood-title">Can’t place the title? Describe it.</h2>
+						<p class="band__lede">
+							The catalogue is only matched on names. The engine underneath also reads the
+							synopsis, so you can search for a mood and let it find the show.
+						</p>
+					</div>
+
+					<form class="field" id="mood-form" novalidate>
+						<label class="field__label" for="mood">What do you feel like watching?</label>
+						<div class="field__row">
+							<input
+								class="input"
+								id="mood"
+								name="mood"
+								type="text"
+								autocomplete="off"
+								placeholder="lonely, warm, and a little bit sad"
+								aria-describedby="mood-help"
+							/>
+							<button class="btn btn--spot" type="submit" data-state="idle" id="mood-submit">
+								Show me
+							</button>
+						</div>
+						<p class="field__help" id="mood-help" data-tone="neutral">
+							Three matches, ranked by how close the synopsis sits to your sentence.
+						</p>
+					</form>
+				</div>
+			</section>
+
+			<!-- ── results land here ── -->
+			<div class="shell" id="matches-slot" aria-live="polite"></div>
+
+			<!-- ── 11 Catalogue · F6 product card grid ── -->
+			<section class="shell section" id="catalogue" aria-labelledby="catalogue-title">
+				<div class="section__head">
+					<h2 id="catalogue-title">The whole shelf</h2>
+					<p class="mono filter-count" id="filter-count">—</p>
+				</div>
+
+				<div class="field field--light filter-bar">
+					<span class="field__label" id="filter-label">Filter by genre</span>
+					<div class="filter" id="filter" role="group" aria-labelledby="filter-label"></div>
+				</div>
+
+				<div class="product-grid" id="grid"></div>
+			</section>
+		</main>
+
+		<!-- ── Ft1 · mast-headed ── -->
+		<footer class="foot-mast">
+			<div class="shell">
+				<div class="foot-mast__row">
+					<div>
+						<p class="wordmark">atlas<span class="period" aria-hidden="true"></span></p>
+						<p class="foot-mast__tagline">
+							A catalogue of fifty synopses, read by machine instead of by name.
+						</p>
+					</div>
+					<nav class="foot-mast__links" aria-label="Elsewhere">
+						<a href="/api/anime">/api/anime</a>
+						<a href="/api/anime/search?q=brain%20games">/api/anime/search</a>
+						<a href="/health">/health</a>
+					</nav>
+				</div>
+				<p class="mono foot-mast__base">
+					Covers served by AniList · synopsis text from the project dataset · ranked by cosine
+					similarity, not by rating
+				</p>
+			</div>
+		</footer>
+
+		<!-- ── detail sheet · the catalogue's detail view ── -->
+		<dialog class="sheet" id="sheet" aria-labelledby="sheet-title">
+			<div class="sheet__scrim" data-close></div>
+			<div class="sheet__panel" tabindex="-1">
+				<div class="sheet__head">
+					<div>
+						<p class="sheet__eyebrow" id="sheet-eyebrow">Catalogue entry</p>
+						<h2 class="sheet__title" id="sheet-title">—</h2>
+					</div>
+					<button class="sheet__close" type="button" data-close aria-label="Close this entry">✕</button>
+				</div>
+				<div class="sheet__body" id="sheet-body" aria-live="polite"></div>
+			</div>
+		</dialog>
+
+		<script type="module" src="/js/index.js"></script>
+	</body>
+</html>

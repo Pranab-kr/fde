@@ -1,0 +1,8 @@
+node_modules/
+.agents/
+.claude/
+.hallmark/
+.env
+.env.local
+skills-lock.json
+data/*.cache.json
