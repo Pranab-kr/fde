@@ -25,7 +25,7 @@ async function loadPdf(filePath) {
  * @returns {Promise<Array<{ fileName: string, title: string, text: string }>>}
  */
 async function loadAllPolicies(dirPath) {
-  const files = fs.readdirSync(dirPath).filter(f => f.endsWith('.pdf'));
+  const files = fs.readdirSync(dirPath).filter(f => f.endsWith('.pdf')).sort();
   const results = [];
 
   for (const file of files) {

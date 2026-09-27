@@ -25,6 +25,17 @@ async function testChunker() {
   // Verify overlap: last sentence of chunk 0 should be present in chunk 1
   assert.ok(chunks[1].chunkIndex === 1, 'Second chunk should have chunkIndex 1');
   assert.ok(chunks[1].id.includes('return_refund_policy.pdf-chunk-1'));
+  const chunk0Sentences = chunks[0].text.split(/(?<=[.!?\n])\s+/);
+  const chunk0TailSentence = chunk0Sentences[chunk0Sentences.length - 1];
+  assert.ok(chunks[1].text.includes(chunk0TailSentence), 'Chunk 1 should contain the overlapping tail sentence from chunk 0');
+
+  // Verify overlap with distinct sentences
+  const distinctText = 'Sentence alpha. Sentence beta. Sentence gamma. Sentence delta. Sentence epsilon.';
+  const distinctChunks = chunkText(distinctText, { fileName: 'distinct.pdf' }, { targetChunkTokens: 8, overlapTokens: 4 });
+  assert.ok(distinctChunks.length > 1, 'Distinct text should split into multiple chunks');
+  const distinctTail = distinctChunks[0].text.split(/(?<=[.!?\n])\s+/).pop();
+  assert.ok(distinctChunks[1].text.includes(distinctTail), 'Chunk 1 must contain tail sentence of Chunk 0');
+  assert.ok(distinctChunks[1].text.startsWith(distinctTail), 'Chunk 1 must start with overlapping sentence from Chunk 0');
 
   // Test chunkText fallback defaults and edge cases
   assert.deepStrictEqual(chunkText(''), [], 'Empty string should yield empty array');
@@ -61,6 +72,8 @@ async function testChunker() {
   const allPolicies = await loadAllPolicies(policiesDir);
   assert.ok(Array.isArray(allPolicies), 'loadAllPolicies should return an array');
   assert.strictEqual(allPolicies.length, 6, 'Should load all 6 policy PDFs');
+  const fileNames = allPolicies.map(p => p.fileName);
+  assert.deepStrictEqual(fileNames, [...fileNames].sort(), 'loadAllPolicies should return files in deterministic sorted order');
   const returnRefundPolicy = allPolicies.find(p => p.fileName === 'return_refund_policy.pdf');
   assert.ok(returnRefundPolicy, 'Should find return_refund_policy.pdf in all policies');
   assert.strictEqual(returnRefundPolicy.title, 'Return Refund Policy');
