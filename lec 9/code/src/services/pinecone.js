@@ -47,9 +47,16 @@ async function querySimilarChunks(queryVector, topK = 5) {
   return response.matches || [];
 }
 
+async function clearPolicyNamespace() {
+  const index = getPineconeIndex();
+  const namespace = index.namespace(config.pineconeNamespace);
+  await namespace.deleteAll();
+}
+
 export {
   getPineconeIndex,
   upsertPolicyChunks,
   querySimilarChunks,
+  clearPolicyNamespace,
 };
 

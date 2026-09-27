@@ -20,8 +20,8 @@ function estimateTokens(text) {
 function chunkText(text, metadata = {}, options = {}) {
   if (!text || typeof text !== 'string') return [];
 
-  const targetTokens = options.targetChunkTokens || 300;
-  const overlapTokens = options.overlapTokens || 30;
+  const targetTokens = options.targetChunkTokens || 150;
+  const overlapTokens = options.overlapTokens || 25;
 
   // Split into sentences / paragraphs
   const sentences = text

@@ -5,7 +5,7 @@ import config from '../src/config.js';
 import { loadAllPolicies } from '../src/services/pdf-loader.js';
 import { chunkText } from '../src/services/chunker.js';
 import { getEmbedding } from '../src/services/embedding.js';
-import { upsertPolicyChunks } from '../src/services/pinecone.js';
+import { upsertPolicyChunks, clearPolicyNamespace } from '../src/services/pinecone.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -26,7 +26,7 @@ async function main() {
     const chunks = chunkText(doc.text, {
       fileName: doc.fileName,
       title: doc.title,
-    }, { targetChunkTokens: 300, overlapTokens: 30 });
+    }, { targetChunkTokens: 150, overlapTokens: 25 });
 
     console.log(`- ${doc.fileName}: ${chunks.length} chunks generated`);
     allChunks.push(...chunks);
@@ -46,6 +46,9 @@ async function main() {
     });
   }
   console.log('\nEmbedding generation completed.');
+
+  console.log(`Clearing existing vectors in Pinecone namespace "${config.pineconeNamespace}"...`);
+  await clearPolicyNamespace();
 
   console.log('Upserting vectors into Pinecone...');
   const upsertedCount = await upsertPolicyChunks(chunksWithVectors);
