@@ -27,7 +27,7 @@ CRITICAL POLICY GUARDRAILS:
 
 const GUARDRAIL_REPLY =
 	"I'm sorry, but I don't have the information you are asking for. Please feel free to check our official store policies or reach out to our customer support team!";
-const SIMILARITY_THRESHOLD = 0.45;
+const SIMILARITY_THRESHOLD = 0.5;
 
 app.get("/api/health", async (_req, res) => {
 	try {
@@ -60,7 +60,7 @@ app.post("/api/query", async (req, res) => {
 		const queryVector = await getEmbedding(question);
 
 		// 2. Query Pinecone for top 5 chunks using cosine similarity
-		const matches = await querySimilarChunks(queryVector, 5);
+		const matches = await querySimilarChunks(queryVector, 2);
 
 		// Format retrieved sources
 		const sources = matches.map((m) => ({
@@ -100,7 +100,7 @@ app.post("/api/query", async (req, res) => {
 				{ role: "user", content: question.trim() },
 			],
 			temperature: 0.2,
-			max_tokens: 350,
+			max_tokens: config.maxTokens || 800,
 		});
 
 		const answer =

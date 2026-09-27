@@ -10,7 +10,8 @@ function run() {
   assert.strictEqual(config.pineconeNamespace, 'policy');
   assert.strictEqual(config.dimension, 1024);
   assert.strictEqual(config.embeddingModel, 'text-embedding-baai-bge-m3-568m');
-  assert.strictEqual(config.model, 'liquid/lfm2-1.2b');
+  assert.strictEqual(config.model, process.env.MODEL || 'liquid/lfm2-1.2b');
+  assert.strictEqual(config.maxTokens, parseInt(process.env.MAX_TOKENS, 10) || 800);
   assert.strictEqual(config.openaiEndpoint, 'http://localhost:1234/v1');
   assert.strictEqual(config.openaiApiKey, 'lmstudio');
   console.log('Task 1 config test passed');

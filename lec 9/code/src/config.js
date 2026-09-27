@@ -11,6 +11,7 @@ const config = {
   model: process.env.MODEL || 'liquid/lfm2-1.2b',
   embeddingModel: process.env.EMBEDDING_MODEL || 'text-embedding-baai-bge-m3-568m',
   dimension: parseInt(process.env.DIMENSION, 10) || 1024,
+  maxTokens: parseInt(process.env.MAX_TOKENS, 10) || 800,
 };
 
 if (!config.pineconeApiKey) {
