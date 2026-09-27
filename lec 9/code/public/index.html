@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MIKU - E-Commerce Policy Support</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-container">
+    <header class="chat-header">
+      <div class="agent-profile">
+        <div class="avatar-ring">
+          <div class="avatar">🌸</div>
+        </div>
+        <div class="agent-info">
+          <h2>MIKU <span class="badge">Customer Support</span></h2>
+          <p class="status"><span class="dot"></span> Online • Powered by Local RAG & Pinecone</p>
+        </div>
+      </div>
+      <div class="system-stats" id="system-stats">Connecting...</div>
+    </header>
+
+    <main class="chat-main" id="chat-box">
+      <div class="message assistant-message">
+        <div class="bubble">
+          Hello! I'm <strong>MIKU</strong>, your customer support assistant 🌸 How may I help you today? You can ask me anything about our shipping, returns, warranty, cancellations, or store policies!
+        </div>
+      </div>
+    </main>
+
+    <div class="suggestions-container">
+      <button class="chip" data-query="How many days do I have to return an item?">📦 Return Window</button>
+      <button class="chip" data-query="Do you offer free shipping?">🚚 Free Shipping</button>
+      <button class="chip" data-query="Can I cancel my order after 1 hour?">⏱️ Cancel Order</button>
+      <button class="chip" data-query="What does the 1-year warranty cover?">🛡️ Warranty Coverage</button>
+      <button class="chip" data-query="What is the recipe for chocolate cake?">🍰 Out-of-Scope Test</button>
+    </div>
+
+    <footer class="chat-input-area">
+      <form id="chat-form">
+        <input 
+          type="text" 
+          id="query-input" 
+          placeholder="Ask MIKU a question about store policies..." 
+          autocomplete="off" 
+          required 
+        />
+        <button type="submit" id="send-btn">
+          <span>Send</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+        </button>
+      </form>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
