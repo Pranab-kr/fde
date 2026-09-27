@@ -35,12 +35,14 @@ async function testUIFiles() {
   assert.ok(css.includes('--primary'), 'CSS should define theme variables');
   assert.ok(css.includes('.rag-drawer'), 'CSS should include rag-drawer styling');
   assert.ok(css.includes('.bubble'), 'CSS should include bubble styling');
+  assert.ok(css.includes('white-space: pre-wrap'), 'CSS should specify white-space: pre-wrap for message bubbles');
 
   const js = fs.readFileSync(path.join(publicDir, 'app.js'), 'utf8');
   assert.ok(js.includes('/api/query'), 'JS should call /api/query');
   assert.ok(js.includes('/api/health'), 'JS should call /api/health');
   assert.ok(js.includes('appendMessage'), 'JS should have appendMessage');
   assert.ok(js.includes('appendTypingIndicator'), 'JS should have typing indicator');
+  assert.ok(js.includes('sendBtn.disabled'), 'JS should guard submit when sendBtn is disabled');
 
   // Verify static serving via Express
   const server = app.listen(0);

@@ -26,6 +26,7 @@ document.querySelectorAll('.chip').forEach(chip => {
 
 chatForm.addEventListener('submit', async (e) => {
   e.preventDefault();
+  if (sendBtn.disabled) return;
   const query = queryInput.value.trim();
   if (!query) return;
 
