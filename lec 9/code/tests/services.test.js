@@ -1,6 +1,7 @@
-const assert = require('assert');
-const { getEmbedding, getEmbeddings } = require('../src/services/embedding');
-const { querySimilarChunks, getPineconeIndex, upsertPolicyChunks } = require('../src/services/pinecone');
+import assert from 'assert';
+import { getEmbedding, getEmbeddings } from '../src/services/embedding.js';
+import { querySimilarChunks, getPineconeIndex, upsertPolicyChunks } from '../src/services/pinecone.js';
+
 
 async function testServices() {
   console.log('Testing local embedding generation...');

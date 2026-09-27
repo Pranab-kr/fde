@@ -1,7 +1,8 @@
-const assert = require('assert');
+import assert from 'assert';
+import config from '../src/config.js';
 
 function run() {
-  const config = require('../src/config');
+
   assert.strictEqual(typeof config.port, 'number');
   assert.strictEqual(typeof config.pineconeApiKey, 'string');
   assert.ok(config.pineconeApiKey.length > 0, 'PINECONE_API_KEY should not be empty');

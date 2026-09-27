@@ -1,7 +1,12 @@
-const assert = require('assert');
-const path = require('path');
-const { chunkText, estimateTokens } = require('../src/services/chunker');
-const { loadPdf, loadAllPolicies } = require('../src/services/pdf-loader');
+import assert from 'assert';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { chunkText, estimateTokens } from '../src/services/chunker.js';
+import { loadPdf, loadAllPolicies } from '../src/services/pdf-loader.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 
 async function testChunker() {
   // Test estimateTokens

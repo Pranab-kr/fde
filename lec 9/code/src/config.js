@@ -1,4 +1,5 @@
-require('dotenv').config();
+import dotenv from 'dotenv';
+dotenv.config();
 
 const config = {
   port: parseInt(process.env.PORT, 10) || 3000,
@@ -16,4 +17,6 @@ if (!config.pineconeApiKey) {
   throw new Error('PINECONE_API_KEY is required in environment variables');
 }
 
-module.exports = config;
+export default config;
+export { config };
+

@@ -1,6 +1,7 @@
-const assert = require('assert');
-const { getPineconeIndex, querySimilarChunks } = require('../src/services/pinecone');
-const { getEmbedding } = require('../src/services/embedding');
+import assert from 'assert';
+import { getPineconeIndex, querySimilarChunks } from '../src/services/pinecone.js';
+import { getEmbedding } from '../src/services/embedding.js';
+
 
 async function testIngestionResult() {
   const index = getPineconeIndex();

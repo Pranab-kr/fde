@@ -1,6 +1,6 @@
-const fs = require('fs');
-const path = require('path');
-const pdfParse = require('pdf-parse');
+import fs from 'fs';
+import path from 'path';
+import pdfParse from 'pdf-parse';
 
 /**
  * Loads and extracts text and metadata from a PDF file.
@@ -47,4 +47,4 @@ async function loadAllPolicies(dirPath) {
   return results;
 }
 
-module.exports = { loadPdf, loadAllPolicies };
+export { loadPdf, loadAllPolicies };

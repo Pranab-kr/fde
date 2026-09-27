@@ -1,5 +1,5 @@
-const { Pinecone } = require('@pinecone-database/pinecone');
-const config = require('../config');
+import { Pinecone } from '@pinecone-database/pinecone';
+import config from '../config.js';
 
 const pc = new Pinecone({
   apiKey: config.pineconeApiKey,
@@ -47,8 +47,9 @@ async function querySimilarChunks(queryVector, topK = 5) {
   return response.matches || [];
 }
 
-module.exports = {
+export {
   getPineconeIndex,
   upsertPolicyChunks,
   querySimilarChunks,
 };
+

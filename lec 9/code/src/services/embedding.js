@@ -1,5 +1,5 @@
-const OpenAI = require('openai');
-const config = require('../config');
+import OpenAI from 'openai';
+import config from '../config.js';
 
 const openai = new OpenAI({
   baseURL: config.openaiEndpoint,
@@ -35,4 +35,5 @@ async function getEmbeddings(texts, batchSize = 5) {
   return results;
 }
 
-module.exports = { getEmbedding, getEmbeddings, openai };
+export { getEmbedding, getEmbeddings, openai };
+

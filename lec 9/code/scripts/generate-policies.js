@@ -1,6 +1,12 @@
-const fs = require('fs');
-const path = require('path');
-const PDFDocument = require('pdfkit');
+import fs from 'fs';
+import path from 'path';
+import process from 'process';
+import { fileURLToPath } from 'url';
+import PDFDocument from 'pdfkit';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 
 const policies = [
   {
@@ -171,11 +177,12 @@ async function main() {
   console.log('Policy generation complete.');
 }
 
-if (require.main === module) {
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
   main().catch(err => {
     console.error('Failed to generate policies:', err);
     process.exit(1);
   });
 }
 
-module.exports = { policies, generatePDF };
+export { policies, generatePDF };
+

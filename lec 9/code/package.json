@@ -10,7 +10,7 @@
     "test": "node tests/config.test.js && node tests/chunker.test.js && node tests/services.test.js"
   },
   "keywords": [],
-  "type": "commonjs",
+  "type": "module",
   "dependencies": {
     "@pinecone-database/pinecone": "^6.1.4",
     "cors": "^2.8.6",

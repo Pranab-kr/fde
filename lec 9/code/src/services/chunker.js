@@ -84,4 +84,4 @@ function chunkText(text, metadata = {}, options = {}) {
   return chunks;
 }
 
-module.exports = { chunkText, estimateTokens };
+export { chunkText, estimateTokens };

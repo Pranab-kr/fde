@@ -1,9 +1,15 @@
-const path = require('path');
-const config = require('../src/config');
-const { loadAllPolicies } = require('../src/services/pdf-loader');
-const { chunkText } = require('../src/services/chunker');
-const { getEmbedding } = require('../src/services/embedding');
-const { upsertPolicyChunks } = require('../src/services/pinecone');
+import path from 'path';
+import process from 'process';
+import { fileURLToPath } from 'url';
+import config from '../src/config.js';
+import { loadAllPolicies } from '../src/services/pdf-loader.js';
+import { chunkText } from '../src/services/chunker.js';
+import { getEmbedding } from '../src/services/embedding.js';
+import { upsertPolicyChunks } from '../src/services/pinecone.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 
 async function main() {
   console.log('=== Starting E-Commerce Policies Ingestion Pipeline ===');
@@ -47,11 +53,12 @@ async function main() {
   console.log('=== Ingestion Complete ===');
 }
 
-if (require.main === module) {
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
   main().catch(err => {
     console.error('Ingestion failed:', err);
     process.exit(1);
   });
 }
 
-module.exports = { main };
+export { main };
+
