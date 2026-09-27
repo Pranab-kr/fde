@@ -26,7 +26,7 @@ async function main() {
     const chunks = chunkText(doc.text, {
       fileName: doc.fileName,
       title: doc.title,
-    }, { targetChunkTokens: 150, overlapTokens: 25 });
+    }, { targetChunkTokens: 150, overlapTokens: 40 });
 
     console.log(`- ${doc.fileName}: ${chunks.length} chunks generated`);
     allChunks.push(...chunks);

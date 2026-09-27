@@ -21,12 +21,13 @@ function chunkText(text, metadata = {}, options = {}) {
   if (!text || typeof text !== 'string') return [];
 
   const targetTokens = options.targetChunkTokens || 150;
-  const overlapTokens = options.overlapTokens || 25;
+  const overlapTokens = options.overlapTokens || 40;
 
-  // Split into sentences / paragraphs
-  const sentences = text
+  // Protect numbered list prefixes (e.g. "1. ", "2. ") so their dot doesn't cause mid-header splits
+  const protectedText = text.replace(/(?<=(?:^|\n|[\.\!\?]\s*)\d+)\.\s+/g, '.__LIST_SPACE__');
+  const sentences = protectedText
     .split(/(?<=[.!?\n])\s+/)
-    .map(s => s.trim())
+    .map(s => s.replaceAll('.__LIST_SPACE__', '. ').trim())
     .filter(Boolean);
 
   const chunks = [];
@@ -53,9 +54,10 @@ function chunkText(text, metadata = {}, options = {}) {
       let overlapCount = 0;
       for (let j = currentSentences.length - 1; j >= 0; j--) {
         const tokens = estimateTokens(currentSentences[j]);
-        if (overlapCount + tokens <= overlapTokens) {
+        if (overlapCount + tokens <= overlapTokens || (overlapSentences.length === 0 && overlapTokens > 0)) {
           overlapSentences.unshift(currentSentences[j]);
           overlapCount += tokens;
+          if (overlapCount >= overlapTokens) break;
         } else {
           break;
         }
