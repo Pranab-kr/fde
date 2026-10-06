@@ -1,0 +1,15 @@
+{
+  "name": "demo-sse-mcp-server",
+  "version": "1.0.0",
+  "description": "MCP Todo Server running over HTTP / SSE transport",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node --test test/*.test.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.1",
+    "express": "^4.21.2"
+  }
+}
