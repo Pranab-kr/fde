@@ -1,0 +1,19 @@
+{
+  "name": "demo-stdio-application",
+  "version": "1.0.0",
+  "description": "Express application with MCP Stdio Client and OpenAI LLM Agent",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test test/*.test.js",
+    "demo:mock": "node scripts/run-demo.js --mock",
+    "demo:live": "node scripts/run-demo.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.1",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "openai": "^4.86.1"
+  }
+}
