@@ -232,17 +232,16 @@ export function createMcpServer(store = new TodoStore()) {
  */
 export function createApp(store = new TodoStore()) {
   const app = express();
-  const server = createMcpServer(store);
 
-  // Map active sessions: sessionId -> SSEServerTransport
-  const transports = new Map();
+  // Map active sessions: sessionId -> { transport, server }
+  const sessions = new Map();
 
   // Health endpoint
   app.get('/health', (req, res) => {
     res.json({
       status: 'ok',
       transport: 'sse',
-      activeSessions: transports.size
+      activeSessions: sessions.size
     });
   });
 
@@ -250,11 +249,13 @@ export function createApp(store = new TodoStore()) {
   app.get('/sse', async (req, res) => {
     console.log('[mcp-server-sse] New SSE connection established.');
     const transport = new SSEServerTransport('/messages', res);
-    transports.set(transport.sessionId, transport);
+    const server = createMcpServer(store);
+
+    sessions.set(transport.sessionId, { transport, server });
 
     res.on('close', () => {
       console.log(`[mcp-server-sse] SSE connection closed for session: ${transport.sessionId}`);
-      transports.delete(transport.sessionId);
+      sessions.delete(transport.sessionId);
     });
 
     await server.connect(transport);
@@ -263,23 +264,23 @@ export function createApp(store = new TodoStore()) {
   // Client messages endpoint (JSON-RPC requests sent via HTTP POST)
   app.post('/messages', async (req, res) => {
     const sessionId = req.query.sessionId;
-    const transport = transports.get(sessionId);
+    const session = sessions.get(sessionId);
 
-    if (!transport) {
+    if (!session) {
       return res.status(404).json({ error: `Session '${sessionId}' not found.` });
     }
 
-    await transport.handlePostMessage(req, res);
+    await session.transport.handlePostMessage(req, res);
   });
 
-  return { app, server, store, transports };
+  return { app, store, sessions };
 }
 
 /**
  * Boots the HTTP server.
  */
 export async function startSseServer(port = 3001, store) {
-  const { app, server, transports } = createApp(store);
+  const { app, sessions, store: activeStore } = createApp(store);
 
   const httpServer = await new Promise((resolve) => {
     const s = app.listen(port, () => {
@@ -290,16 +291,18 @@ export async function startSseServer(port = 3001, store) {
 
   return {
     app,
-    server,
-    transports,
+    sessions,
+    store: activeStore,
     httpServer,
     close: async () => {
-      for (const t of transports.values()) {
+      for (const s of sessions.values()) {
         try {
-          await t.close();
+          await s.server.close();
+          await s.transport.close();
         } catch {}
       }
-      transports.clear();
+      sessions.clear();
+      httpServer.closeAllConnections?.();
       await new Promise((resolve) => httpServer.close(resolve));
     }
   };
