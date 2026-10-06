@@ -1,0 +1,15 @@
+{
+  "name": "demo-stdio-mcp-server",
+  "version": "1.0.0",
+  "description": "MCP Todo Server running over Stdio transport",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node --test test/*.test.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.1",
+    "zod": "^3.24.2"
+  }
+}
