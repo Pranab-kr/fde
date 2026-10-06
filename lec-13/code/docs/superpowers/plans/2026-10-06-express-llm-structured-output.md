@@ -30,7 +30,7 @@
 **Interfaces:**
 - Produces: ES Module support, npm scripts (`start`, `test`), and `.env` template.
 
-- [ ] **Step 1: Update package.json to ES Modules and add test scripts**
+- [x] **Step 1: Update package.json to ES Modules and add test scripts**
 
 Update `package.json`:
 ```json
@@ -57,7 +57,7 @@ Update `package.json`:
 }
 ```
 
-- [ ] **Step 2: Create .env.example and .env template**
+- [x] **Step 2: Create .env.example and .env template**
 
 Create `.env.example`:
 ```env
@@ -75,12 +75,12 @@ OPENAI_BASE_URL=
 OPENAI_MODEL=gpt-4o-mini
 ```
 
-- [ ] **Step 3: Verify package.json syntax with node**
+- [x] **Step 3: Verify package.json syntax with node**
 
 Run: `node -e "import('./package.json', { with: { type: 'json' } }).then(pkg => console.log('Type:', pkg.default.type))"`
 Expected: Output `Type: module`
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add package.json .env.example
@@ -102,7 +102,7 @@ git commit -m "chore: configure ES modules and environment template"
   - `createOpenAIClient(config)`: Returns an instantiated OpenAI client.
   - `scheduleMeeting(message, client, model)`: Extracts and returns parsed meeting details.
 
-- [ ] **Step 1: Write failing unit test for `scheduleMeeting`**
+- [x] **Step 1: Write failing unit test for `scheduleMeeting`**
 
 Create `test/scheduleMeeting.test.js`:
 ```javascript
@@ -195,12 +195,12 @@ test("scheduleMeeting throws when model refuses", async () => {
 });
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `node --test test/scheduleMeeting.test.js`
 Expected: FAIL (Cannot find module `../index.js`)
 
-- [ ] **Step 3: Write minimal implementation in `index.js`**
+- [x] **Step 3: Write minimal implementation in `index.js`**
 
 Create `index.js`:
 ```javascript
@@ -267,12 +267,12 @@ export async function scheduleMeeting(message, client = defaultOpenAIClient, mod
 }
 ```
 
-- [ ] **Step 4: Run test to verify it passes**
+- [x] **Step 4: Run test to verify it passes**
 
 Run: `node --test test/scheduleMeeting.test.js`
 Expected: PASS (4 tests passed)
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add index.js test/scheduleMeeting.test.js
@@ -292,7 +292,7 @@ git commit -m "feat: implement MeetingDetailsSchema and scheduleMeeting function
   - `createApp(options)`: Function returning configured Express application.
   - `POST /api/schedule`: Accepts `{ message: string }`, returns `{ success: true, data: { ... } }` or `{ success: false, error: string }`.
 
-- [ ] **Step 1: Write integration tests for Express API**
+- [x] **Step 1: Write integration tests for Express API**
 
 Create `test/server.test.js`:
 ```javascript
@@ -396,12 +396,12 @@ test("POST /api/schedule returns 500 when extraction fails", async () => {
 });
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `node --test test/server.test.js`
 Expected: FAIL (`createApp` is not a function)
 
-- [ ] **Step 3: Update `index.js` to implement Express app and server startup**
+- [x] **Step 3: Update `index.js` to implement Express app and server startup**
 
 Update `index.js` to export `createApp` and start server when run directly:
 ```javascript
@@ -516,17 +516,17 @@ if (isDirectExecution) {
 }
 ```
 
-- [ ] **Step 4: Run integration tests to verify they pass**
+- [x] **Step 4: Run integration tests to verify they pass**
 
 Run: `node --test test/server.test.js`
 Expected: PASS (3 tests passed)
 
-- [ ] **Step 5: Run full test suite**
+- [x] **Step 5: Run full test suite**
 
 Run: `npm test`
 Expected: PASS (All tests pass)
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add index.js test/server.test.js
@@ -543,7 +543,7 @@ git commit -m "feat: implement Express app and /api/schedule endpoint"
 **Interfaces:**
 - Documents setup, environment variables, API usage, and curl examples.
 
-- [ ] **Step 1: Create README.md**
+- [x] **Step 1: Create README.md**
 
 Create `README.md` documenting:
 - How to install dependencies (`npm install`).
@@ -556,7 +556,7 @@ Create `README.md` documenting:
     -d '{"message": "Schedule a project review with Aditya tomorrow at 3 PM for 45 minutes."}'
   ```
 
-- [ ] **Step 2: Commit documentation**
+- [x] **Step 2: Commit documentation**
 
 ```bash
 git add README.md
