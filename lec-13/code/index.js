@@ -1,6 +1,8 @@
 import "dotenv/config";
+import express from "express";
 import OpenAI from "openai";
 import { zodResponseFormat } from "openai/helpers/zod";
+import { fileURLToPath } from "node:url";
 import { z } from "zod";
 
 export const MeetingDetailsSchema = z.object({
@@ -58,4 +60,50 @@ export async function scheduleMeeting(message, client = defaultOpenAIClient, mod
   }
 
   return parsed;
+}
+
+export function createApp(options = {}) {
+  const app = express();
+  const client = options.client || defaultOpenAIClient;
+  const model = options.model || DEFAULT_MODEL;
+
+  app.use(express.json());
+
+  app.post("/api/schedule", async (req, res) => {
+    try {
+      const { message } = req.body || {};
+      if (!message || typeof message !== "string" || !message.trim()) {
+        return res.status(400).json({
+          success: false,
+          error: "Field 'message' is required and must be a non-empty string.",
+        });
+      }
+
+      const meetingDetails = await scheduleMeeting(message, client, model);
+
+      return res.status(200).json({
+        success: true,
+        data: meetingDetails,
+      });
+    } catch (error) {
+      return res.status(500).json({
+        success: false,
+        error: error.message || "Failed to process meeting request",
+      });
+    }
+  });
+
+  return app;
+}
+
+// Start server when run directly
+const isDirectExecution = process.argv[1] && process.argv[1] === fileURLToPath(import.meta.url);
+if (isDirectExecution) {
+  const PORT = process.env.PORT || 3000;
+  const app = createApp();
+  app.listen(PORT, () => {
+    console.log(`Server listening on port ${PORT}`);
+    console.log(`Model: ${DEFAULT_MODEL}`);
+    console.log(`Base URL: ${process.env.OPENAI_BASE_URL || "Default OpenAI"}`);
+  });
 }
